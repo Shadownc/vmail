@@ -19,7 +19,7 @@ export default function Index() {
           About{" "}
         </h1>
         <p className="mt-8">
-          <strong>Vmail.DEV </strong> is a Virtual temporary email service.{" "}
+          <strong>IMyself Mail Service </strong> is a Virtual temporary email service.{" "}
         </p>
         <p className="mt-4">
           You can get a temporary email without revealing any personal
