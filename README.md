@@ -51,12 +51,6 @@ pnpm run remix:dev
 
 运行前复制 `apps/remix/.env.example` 文件并重命名为 `apps/remix/.env`，填写必要的环境变量。
 
-## ❤️ 交流群
-
-有任何问题或意见，欢迎加入交流群讨论。
-
-- 添加微信 `yesmore_cc` (**备注你的职业**) 拉讨论群或[扫码进群](https://img.inke.app/file/494a7126352427a3b34d8.jpg) 
-- Discord: https://discord.gg/d68kWCBDEs
 
 ## 🎨 Inspired By
 
@@ -69,6 +63,3 @@ Please check out these previous works that helped inspire the creation of vmail.
 
 GNU General Public License v3.0
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=oiov/vmail&type=Date)](https://star-history.com/#oiov/vmail&Date)
