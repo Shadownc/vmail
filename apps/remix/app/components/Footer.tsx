@@ -29,7 +29,8 @@ export default function Footer() {
         <Link to="https://status.100769.xyz" target="_blank">
           Status
         </Link>
-      </div>
+        .
+      </p>
       <div className="inline-flex justify-center mt-4 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start">
         <Link
           to="https://blog.lmyself.top/"

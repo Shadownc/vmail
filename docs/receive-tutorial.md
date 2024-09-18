@@ -8,28 +8,7 @@
 
 然后，创建一个名为 `emails` 的表。
 
-选择您的数据库，您会看到“编辑表”按钮，点击并进入:
-
-![](https://img.inke.app/file/d49086f9b450edd5a2cef.png) 
-
-> ⚠️ 注意：**左上角有一个加号按钮，我尝试点击它没有任何提示或效果，所以我使用了 turso 提供的 cli 来初始化表。**
-
-Cli 文档：https://docs.turso.tech/cli/introduction 
-
-Linux (或 mac/windows) 终端执行：
-
-```bash
-# 安装（安装后记得重启终端生效）
-curl -sSfL https://get.tur.so/install.sh | bash
-
-# 登录账户
-turso auth login
-
-# 连接到您的Turso数据库
-turso db shell <database-name>
-```
-
-将sql脚本复制到终端运行（packages/database/drizzle/0000_sturdy_arclight.sql）
+选择您的数据库，您会看到“编辑表”按钮，点击并进入，继续点击左上角的 `SQL runner` 按钮，将[sql脚本](https://github.com/oiov/vmail/blob/main/packages/database/drizzle/0000_sturdy_arclight.sql)复制到终端运行:
 
 <details>
 <summary>查看脚本内容</summary>
@@ -59,7 +38,28 @@ turso db shell <database-name>
 </code></pre>
 </details>
 
+<details>
+<summary>手动创建表（旧版方法）</summary>
+Cli 文档：https://docs.turso.tech/cli/introduction 
+
+Linux (或 mac/windows) 终端执行：
+
+# 安装（安装后记得重启终端生效）
+curl -sSfL https://get.tur.so/install.sh | bash
+# 登录账户
+turso auth login
+# 连接到您的Turso数据库
+turso db shell <database-name>
+</details>
+
 **2.部署 email worker**
+
+需要准备 Node 环境（推荐 18.x 及以上），并且需要安装 wrangler cli 并在本地登录，参考 https://developers.cloudflare.com/workers/wrangler/install-and-update (登录时建议开启VPN)
+
+```bash
+# 安装 pnpm 
+npm install -g pnpm
+```
 
 ```bash
 git clone https://github.com/oiov/vmail
@@ -83,7 +83,6 @@ pnpm install
 ```bash
 cd apps/email-worker
 
-# 需要 Node 环境，并且需要安装 wrangler cli 并在本地登录，参考 https://developers.cloudflare.com/workers/wrangler/install-and-update
 pnpm run deploy
 ```
 
@@ -107,7 +106,7 @@ pnpm run deploy
 | TURNSTILE_KEY          | 可选，网站验证所需的 Turnstile Key    | `my-turnstile-key`          |
 | TURNSTILE_SECRET       | 可选，网站验证所需的 Turnstile Secret | `my-turnstile-secret`       |
 
-获取 `TURNSTILE_KEY`、`TURNSTILE_SECRET` 请前往 cloudflare 控制台 https://dash.cloudflare.com/[account-id]/turnstile
+获取 `TURNSTILE_KEY`、`TURNSTILE_SECRET` 请前往 cloudflare 控制台 https://dash.cloudflare.com/?to=/:account/turnstile
 
 **Vercel:** 
 
@@ -120,6 +119,9 @@ pnpm run deploy
 部署完后继续点击 Countinu to Dashboard，进入 Settings -> General，修改下面设置：
 
 ![](https://img.inke.app/file/573f842ccbefdf8daf319.png)
+
+注意一定要修改目录为 `apps/remix`，否则部署后访问网站会出现`404`错误：
+
 ![](https://img.inke.app/file/36c1566d8c27735bb097d.png)
 
 **然后进入 Deployments 重新部署一次，或向 github 推送代码重新触发部署**。
@@ -131,12 +133,18 @@ cd vmail/apps/remix
 fly launch
 ```
   
-**5.部署成功后在 cloudflare 添加域名解析(A记录)到对应平台，就可以愉快的玩耍了**
+**5.部署成功后在 cloudflare 添加域名解析(A记录)到对应平台**
 
 vercel 演示如何解析：
 
 ![](https://img.inke.app/file/245b71636cd16afcf93c7.png)
 
 ![](https://img.inke.app/file/e10af19334fd6a13b7d2e.png)
+
+**6.在CF域名控制台修改加密模式为完全（或严格）**
+
+> 若不修改，访问网站会出现`重定向次数过多`错误
+
+![](https://img.vmail.dev/api/img/KK8Qwp)
 
 以上，完成！
